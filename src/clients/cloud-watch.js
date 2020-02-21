@@ -26,6 +26,7 @@ export const startQuery = ({
           `| filter @logStream like /^${cluster}\\/${ecsServiceName}\\// ` +
           (messageFilter ? `| filter @message like ${messageFilter}` : '') +
           '| sort @timestamp asc ',
+        limit: 2000,
       },
       (err, data) => {
         if (err) {
