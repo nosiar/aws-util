@@ -32,7 +32,6 @@ export const getServices = async ({ name, region, cluster }) => {
 
   return serviceArns
     .filter((arn) => arn.includes(name))
-    .sort()
     .map((arn) => {
       const { resourceId } = parseArn(arn)
       return {

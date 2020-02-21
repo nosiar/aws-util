@@ -1,16 +1,26 @@
 #!/usr/bin/env node
 
-import assert from 'assert'
-import inquirer from 'inquirer'
-import open from 'open'
+import yargs from 'yargs'
 import { openECSService } from './aws-console'
 
-;(async () => {
-  // console.log(await getTaskDefinitions({ region: 'ap-northeast-1' }))
-  // console.log(await getTaskDefinitionFamilies({ region: 'ap-northeast-1' }))
-  await openECSService({
-    name: 'city',
-    region: 'ap-northeast-1',
-    cluster: 'triple',
+yargs
+  .command({
+    command: 'open service <name>',
+    aliases: [],
+    desc: 'Open aws service console',
+    builder: (yargs) =>
+      yargs.default({
+        region: 'ap-northeast-1',
+        cluster: 'triple',
+      }),
+    handler: async ({ name, region, cluster }) => {
+      await openECSService({
+        name,
+        region,
+        cluster,
+      })
+    },
   })
-})()
+  .demandCommand()
+  .help()
+  .wrap(72).argv

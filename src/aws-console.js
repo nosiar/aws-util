@@ -24,7 +24,10 @@ const selectService = async (services) => {
 }
 
 export const openECSService = async ({ name, region, cluster }) => {
-  const services = await getServices({ name, region, cluster })
+  const services = [
+    ...(await getServices({ name, region, cluster: 'triple' })),
+    ...(await getServices({ name, region, cluster: 'triple-dev' })),
+  ].sort((a, b) => (a.ecsServiceName > b.ecsServiceName ? 1 : -1))
   const { consoleUrl } = await selectService(services)
   await open(consoleUrl)
 }
