@@ -2,6 +2,7 @@
 
 import assert from 'assert'
 import inquirer from 'inquirer'
+import open from 'open'
 import {
   getTaskDefinitions,
   getTaskDefinitionFamilies,
@@ -38,5 +39,5 @@ const selectService = async (services) => {
   })
 
   const { consoleUrl } = await selectService(services)
-  console.log(consoleUrl)
+  await open(consoleUrl)
 })()
