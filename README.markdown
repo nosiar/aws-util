@@ -23,3 +23,16 @@ npm uninstall -g aws-util
 ```sh
 au open service <name>
 ```
+
+### 헬프
+
+```sh
+au --help
+au open --help
+```
+
+## 예제
+
+```sh
+au open service riple-cit
+```
