@@ -16,7 +16,8 @@
   "author": "Jonghwa Woo <jay@titicaca-corp.com>",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.610.0"
+    "aws-sdk": "^2.610.0",
+    "inquirer": "^7.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
