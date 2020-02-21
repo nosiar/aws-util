@@ -30,6 +30,7 @@ yargs
         region: 'ap-northeast-1',
         startTime: moment().subtract(1, 'hour'),
         endTime: moment(),
+        file: undefined,
       }),
     handler: async ({
       messageFilter,
@@ -37,6 +38,7 @@ yargs
       region,
       startTime,
       endTime,
+      file,
     }) => {
       await runInsightQuery({
         messageFilter,
@@ -44,6 +46,7 @@ yargs
         region,
         startTime,
         endTime,
+        file,
       })
     },
   })

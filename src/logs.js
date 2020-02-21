@@ -1,3 +1,5 @@
+import { homedir } from 'os'
+import { writeFileSync } from 'fs'
 import colors from 'colors'
 import moment from 'moment'
 import selectService from './common/select-service'
@@ -9,6 +11,7 @@ export const runInsightQuery = async ({
   region,
   startTime,
   endTime,
+  file,
 }) => {
   const { ecsServiceName, cluster } = await selectService({
     serviceNameKeyword,
@@ -37,12 +40,24 @@ export const runInsightQuery = async ({
   } while (result.status === 'Running')
   process.stdout.write('\n')
 
+  const parsedFile = path(file)
+
+  if (parsedFile) {
+    writeFileSync(parsedFile, '')
+  }
   for (const { timestamp, message } of result.results.map((r) => ({
     timestamp: r[0].value,
     message: r[1].value,
   }))) {
-    console.log(timestamp.yellow, message)
+    if (!parsedFile) {
+      console.log(timestamp.yellow, message)
+    } else {
+      writeFileSync(parsedFile, `${timestamp} ${message}\n`, { flag: 'a' })
+    }
   }
 }
+
+const path = (file) =>
+  file && file[0] === '~' ? homedir() + file.substr(1) : file
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
