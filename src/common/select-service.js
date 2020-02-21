@@ -9,9 +9,9 @@ const selectService = async ({ serviceNameKeyword, region }) => {
     .filter(({ ecsServiceName }) => ecsServiceName.includes(serviceNameKeyword))
     .sort((a, b) => (a.ecsServiceName > b.ecsServiceName ? 1 : -1))
 
-  if (services.length == 0) {
+  if (services.length === 0) {
     throw Error('no service found.')
-  } else if (services.length == 1) {
+  } else if (services.length === 1) {
     return services[0]
   } else {
     const { service } = await prompt({
