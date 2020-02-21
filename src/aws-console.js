@@ -23,7 +23,7 @@ const selectService = async (services) => {
   }
 }
 
-export const openECSService = async ({ name, region, cluster }) => {
+export const openECSService = async ({ name, region }) => {
   const services = [
     ...(await getServices({ name, region, cluster: 'triple' })),
     ...(await getServices({ name, region, cluster: 'triple-dev' })),

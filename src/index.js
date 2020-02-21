@@ -11,13 +11,11 @@ yargs
     builder: (yargs) =>
       yargs.default({
         region: 'ap-northeast-1',
-        cluster: 'triple',
       }),
-    handler: async ({ name, region, cluster }) => {
+    handler: async ({ name, region }) => {
       await openECSService({
         name,
         region,
-        cluster,
       })
     },
   })

@@ -6,7 +6,6 @@ const getECSInstance = (region) =>
   ecsInstances[region] || (ecsInstances[region] = new ECS({ region }))
 
 export const getTaskDefinitionFamilies = ({ region }) => {
-  console.log(ecsInstances)
   return new Promise((resolve, reject) => {
     getECSInstance(region).listTaskDefinitionFamilies({}, (err, data) => {
       if (err) {
