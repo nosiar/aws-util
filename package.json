@@ -27,10 +27,9 @@
     "rimraf": "^3.0.1"
   },
   "bin": {
-    "au": "./bin/run.sh"
+    "au": "./dist/index.js"
   },
   "files": [
-    "/bin",
     "/dist"
   ]
 }
