@@ -1,33 +1,9 @@
 #!/usr/bin/env node
 
-import inquirer from 'inquirer'
 import open from 'open'
-import { getServices } from './ecs-client'
+import selectService from './common/select-service'
 
-const selectService = async (services) => {
-  if (services.length == 0) {
-    process.exitCode = 1
-  } else if (services.length == 1) {
-    return services[0]
-  } else {
-    const { service } = await inquirer.prompt({
-      type: 'list',
-      name: 'service',
-      message: '서비스 이름을 선택하세요.',
-      choices: services.map((s) => ({
-        name: s.ecsServiceName,
-        value: s,
-      })),
-    })
-    return service
-  }
-}
-
-export const openECSService = async ({ name, region }) => {
-  const services = [
-    ...(await getServices({ name, region, cluster: 'triple' })),
-    ...(await getServices({ name, region, cluster: 'triple-dev' })),
-  ].sort((a, b) => (a.ecsServiceName > b.ecsServiceName ? 1 : -1))
-  const { consoleUrl } = await selectService(services)
+export const openECSService = async ({ serviceNameKeyword, region }) => {
+  const { consoleUrl } = await selectService({ serviceNameKeyword, region })
   await open(consoleUrl)
 }

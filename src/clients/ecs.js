@@ -17,7 +17,7 @@ export const getTaskDefinitionFamilies = ({ region }) => {
   })
 }
 
-export const getServices = async ({ name, region, cluster }) => {
+export const getServices = async ({ region, cluster }) => {
   let serviceArns = []
 
   do {
@@ -29,15 +29,14 @@ export const getServices = async ({ name, region, cluster }) => {
     serviceArns = [...serviceArns, ...newServiceArns]
   } while (nextToken)
 
-  return serviceArns
-    .filter((arn) => arn.includes(name))
-    .map((arn) => {
-      const { resourceId } = parseArn(arn)
-      return {
-        ecsServiceName: resourceId,
-        consoleUrl: `https://${region}.console.aws.amazon.com/ecs/home#/clusters/${cluster}/services/${resourceId}/details`,
-      }
-    })
+  return serviceArns.map((arn) => {
+    const { resourceId } = parseArn(arn)
+    return {
+      ecsServiceName: resourceId,
+      cluster,
+      consoleUrl: `https://${region}.console.aws.amazon.com/ecs/home#/clusters/${cluster}/services/${resourceId}/details`,
+    }
+  })
 }
 
 const getSubServices = ({ region, cluster, nextToken }) =>
