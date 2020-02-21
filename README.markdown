@@ -3,9 +3,7 @@
 ## 설치
 
 ```sh
-npm install
-npm run build
-npm install -g .
+npm install -g https://github.com/nosiar/aws-util.git
 ```
 
 ## 삭제
