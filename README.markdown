@@ -19,18 +19,28 @@ npm uninstall -g aws-util
 #### 서비스
 
 ```sh
-au open service <name>
+au open service <serviceNameKeyword>
+```
+
+### Cloud Watch Insights
+
+```sh
+au logs <serviceNameKeyword> [messageFilter]
 ```
 
 ### 헬프
 
+자세한 내용은 헬프를 보세요.
+
 ```sh
 au --help
 au open --help
+au logs --help
 ```
 
 ## 예제
 
 ```sh
 au open service riple-cit
+au logs soto '/error/'
 ```
