@@ -1,0 +1,34 @@
+{
+  "name": "aws-util",
+  "version": "1.0.0",
+  "description": "aws util",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel --out-dir dist src",
+    "clean": "rimraf dist",
+    "prepack": "npm run clean && npm run build"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "keywords": [],
+  "author": "Jonghwa Woo <jay@titicaca-corp.com>",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.610.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "rimraf": "^3.0.1"
+  },
+  "bin": {
+    "au": "./bin/run.sh"
+  },
+  "files": [
+    "/bin",
+    "/dist"
+  ]
+}
