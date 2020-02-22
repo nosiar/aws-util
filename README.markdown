@@ -42,5 +42,5 @@ au logs --help
 
 ```sh
 au open service riple-cit
-au logs soto '/error/'
+au logs soto '/(?i)error/'
 ```

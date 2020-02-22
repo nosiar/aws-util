@@ -17,7 +17,7 @@ const selectService = async ({ serviceNameKeyword, region }) => {
     const { service } = await prompt({
       type: 'list',
       name: 'service',
-      message: '서비스 이름을 선택하세요.',
+      message: '서비스를 선택하세요.',
       choices: services.map((s) => ({
         name: s.ecsServiceName,
         value: s,
