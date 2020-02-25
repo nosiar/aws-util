@@ -2,7 +2,7 @@ import { homedir } from 'os'
 import { writeFileSync } from 'fs'
 import colors from 'colors'
 import moment from 'moment'
-import selectService from './common/select-service'
+import selectService from './select-service'
 import { startQuery, getQueryResults } from './clients/cloud-watch'
 
 export const runInsightQuery = async ({

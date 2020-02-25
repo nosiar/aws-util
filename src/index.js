@@ -2,24 +2,41 @@
 
 import yargs from 'yargs'
 import moment from 'moment'
-import { openECSService } from './aws-console'
-import { runInsightQuery } from './logs'
+import { openECSService } from './aws-open'
+import { runInsightQuery } from './aws-logs'
+import { openGithubRepository } from './github-open'
 
 yargs
   .command({
-    command: 'open service <serviceNameKeyword>',
-    aliases: [],
-    desc: 'Open aws service console',
+    command: 'open',
+    desc: 'Open something in web browser',
     builder: (yargs) =>
-      yargs.default({
-        region: 'ap-northeast-1',
-      }),
-    handler: async ({ serviceNameKeyword, region }) => {
-      await openECSService({
-        serviceNameKeyword,
-        region,
-      })
-    },
+      yargs
+        .command({
+          command: 'service <serviceNameKeyword>',
+          aliases: ['svc'],
+          desc: 'Open aws service console',
+          builder: (yargs) =>
+            yargs.default({
+              region: 'ap-northeast-1',
+            }),
+          handler: async ({ serviceNameKeyword, region }) => {
+            await openECSService({
+              serviceNameKeyword,
+              region,
+            })
+          },
+        })
+        .command({
+          command: 'github <repositoryNameKeyword>',
+          aliases: ['gh'],
+          desc: 'Open github repository',
+          handler: async ({ repositoryNameKeyword }) => {
+            await openGithubRepository({
+              repositoryNameKeyword,
+            })
+          },
+        }),
   })
   .command({
     command: 'logs <serviceNameKeyword> [messageFilter]',

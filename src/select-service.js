@@ -1,5 +1,5 @@
 import { prompt } from 'inquirer'
-import { getServices } from '../clients/ecs'
+import { getServices } from './clients/ecs'
 
 const selectService = async ({ serviceNameKeyword, region }) => {
   const services = [
