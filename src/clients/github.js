@@ -14,20 +14,20 @@ const fetchGraphql = async (query) => {
   return response.json()
 }
 
-export const getRepositories = async () => {
+export const getRepositories = async ({ repositoryNameKeyword }) => {
   let nodes = []
 
   do {
     var {
-      totalCount,
+      repositoryCount,
       nodes: newNodes,
       pageInfo: { endCursor: after, hasNextPage },
-    } = await getSubRepositories({ after })
+    } = await getSubRepositories({ repositoryNameKeyword, after })
 
     nodes = [...nodes, ...newNodes]
   } while (hasNextPage)
 
-  assert.strictEqual(nodes.length, totalCount)
+  assert.strictEqual(nodes.length, repositoryCount)
 
   return nodes.map((node) => ({
     ...node,
@@ -35,30 +35,28 @@ export const getRepositories = async () => {
   }))
 }
 
-const getSubRepositories = async ({ after }) => {
+const getSubRepositories = async ({ repositoryNameKeyword, after }) => {
+  const keyword = repositoryNameKeyword || ''
   const afterQuery = after ? `, after: "${after}"` : ''
   const query = `
     {
-      organization(login:"titicacadev"){
-        name,
-        repositories(orderBy: {field: NAME, direction: ASC}, first: 100${afterQuery}) {
-          totalCount
-          nodes {
-            name
-            nameWithOwner
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
-          }
+        search(query: "user:titicacadev ${keyword}", type: REPOSITORY, first:100${afterQuery}) {
+            repositoryCount
+            nodes {
+                ... on Repository {
+                name
+                nameWithOwner
+                }
+            }
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
         }
-      }
     }
-   `
+    `
   const {
-    data: {
-      organization: { repositories },
-    },
+    data: { search },
   } = await fetchGraphql(query)
-  return repositories
+  return search
 }

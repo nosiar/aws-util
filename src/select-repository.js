@@ -2,9 +2,7 @@ import { prompt } from 'inquirer'
 import { getRepositories } from './clients/github'
 
 const selectRepository = async ({ repositoryNameKeyword }) => {
-  const repositories = (await getRepositories()).filter(({ name }) =>
-    name.includes(repositoryNameKeyword),
-  )
+  const repositories = await getRepositories({ repositoryNameKeyword })
 
   if (repositories.length === 0) {
     throw Error('no repository found.')
