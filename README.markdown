@@ -12,14 +12,28 @@ npm install -g https://github.com/nosiar/aws-util.git
 npm uninstall -g aws-util
 ```
 
+## 환경변수
+
+```sh
+GITHUB_PERSONAL_ACCESS_TOKEN
+```
+
+(https://github.com/settings/tokens 에서 생성)
+
 ## 실행
 
-### 브라우저에서 aws console 열기
+### 브라우저에서 열기
 
-#### 서비스
+#### aws 서비스
 
 ```sh
 au open service <serviceNameKeyword>
+```
+
+#### github 저장소
+
+```sh
+au open gh <repositoryNameKeyword>
 ```
 
 ### Cloud Watch Insights
@@ -42,5 +56,6 @@ au logs --help
 
 ```sh
 au open service riple-cit
+au open gh amant
 au logs soto '/(?i)error/'
 ```
