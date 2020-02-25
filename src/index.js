@@ -69,4 +69,4 @@ yargs
   })
   .demandCommand()
   .help()
-  .wrap(72).argv
+  .wrap(90).argv
