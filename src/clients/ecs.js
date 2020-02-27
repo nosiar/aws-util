@@ -5,17 +5,53 @@ const ecsInstances = {}
 const getECSInstance = (region) =>
   ecsInstances[region] || (ecsInstances[region] = new ECS({ region }))
 
-export const getTaskDefinitionFamilies = ({ region }) => {
-  return new Promise((resolve, reject) => {
-    getECSInstance(region).listTaskDefinitionFamilies({}, (err, data) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(data)
-      }
+export const getTaskDefinitionFamilies = async ({ region }) => {
+  let taskDefinitionFamilies = []
+
+  do {
+    var {
+      families: newTaskDefinitionFamilies,
+      nextToken,
+    } = await getSubTaskDefinitionFamilies({
+      region,
+      nextToken,
     })
-  })
+    taskDefinitionFamilies = [
+      ...taskDefinitionFamilies,
+      ...newTaskDefinitionFamilies,
+    ]
+  } while (nextToken)
+
+  return taskDefinitionFamilies
 }
+
+const getSubTaskDefinitionFamilies = ({ region, nextToken }) =>
+  new Promise((resolve, reject) => {
+    getECSInstance(region).listTaskDefinitionFamilies(
+      { nextToken, status: 'ACTIVE', maxResults: 100 },
+      (err, data) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(data)
+        }
+      },
+    )
+  })
+
+export const getTaskDefinition = ({ region, name }) =>
+  new Promise((resolve, reject) => {
+    getECSInstance(region).describeTaskDefinition(
+      { taskDefinition: name },
+      (err, data) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(data)
+        }
+      },
+    )
+  })
 
 export const getServices = async ({ region, cluster }) => {
   let serviceArns = []

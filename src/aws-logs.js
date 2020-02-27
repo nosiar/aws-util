@@ -2,27 +2,36 @@ import { homedir } from 'os'
 import { writeFileSync } from 'fs'
 import colors from 'colors'
 import moment from 'moment'
-import selectService from './select-service'
+import selectContainerDefinition from './select-container-definition'
 import { startQuery, getQueryResults } from './clients/cloud-watch'
 
 export const runInsightQuery = async ({
   messageFilter,
-  serviceNameKeyword,
+  taskDefinitionNameKeyword,
   region,
   startTime,
   endTime,
   file,
 }) => {
-  const { ecsServiceName, cluster } = await selectService({
-    serviceNameKeyword,
+  const {
+    name: containerName,
+    logConfiguration: {
+      options: {
+        'awslogs-group': logGroup,
+        'awslogs-stream-prefix': streamPrefix,
+      },
+    },
+  } = await selectContainerDefinition({
+    taskDefinitionNameKeyword,
     region,
   })
 
   const { queryId } = await startQuery({
     messageFilter,
-    ecsServiceName,
+    containerName,
     region,
-    cluster,
+    logGroup,
+    streamPrefix,
     startTime: moment.utc(startTime).unix(),
     endTime: moment.utc(endTime).unix(),
   })

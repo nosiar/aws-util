@@ -39,7 +39,7 @@ yargs
         }),
   })
   .command({
-    command: 'logs <serviceNameKeyword> [messageFilter]',
+    command: 'logs <taskDefinitionNameKeyword> [messageFilter]',
     aliases: [],
     desc: 'Run cloud watch insights query',
     builder: (yargs) =>
@@ -51,7 +51,7 @@ yargs
       }),
     handler: async ({
       messageFilter,
-      serviceNameKeyword,
+      taskDefinitionNameKeyword,
       region,
       startTime,
       endTime,
@@ -59,7 +59,7 @@ yargs
     }) => {
       await runInsightQuery({
         messageFilter,
-        serviceNameKeyword,
+        taskDefinitionNameKeyword,
         region,
         startTime,
         endTime,

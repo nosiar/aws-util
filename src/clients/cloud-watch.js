@@ -8,22 +8,22 @@ const getCloudWatchLogsInstances = (region) =>
 
 export const startQuery = ({
   messageFilter,
-  ecsServiceName,
+  containerName,
   region,
-  cluster,
+  logGroup,
+  streamPrefix,
   startTime,
   endTime,
-  logGroupName = '/aws/ecs',
 }) =>
   new Promise((resolve, reject) => {
     getCloudWatchLogsInstances(region).startQuery(
       {
         startTime,
         endTime,
-        logGroupName,
+        logGroupName: logGroup,
         queryString:
           'fields @timestamp, @message ' +
-          `| filter @logStream like /^${cluster}\\/${ecsServiceName}\\// ` +
+          `| filter @logStream like /^${streamPrefix}\\/${containerName}\\// ` +
           (messageFilter ? `| filter @message like ${messageFilter}` : '') +
           '| sort @timestamp asc ',
         limit: 2000,
