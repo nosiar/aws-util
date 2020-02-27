@@ -39,7 +39,7 @@ au open gh <repositoryNameKeyword>
 ### Cloud Watch Insights
 
 ```sh
-au logs <serviceNameKeyword> [messageFilter]
+au logs <taskDefinitionNameKeyword> [messageFilter]
 ```
 
 ### 헬프
