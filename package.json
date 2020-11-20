@@ -17,12 +17,13 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.647.0",
+    "ci": "^1.0.0",
     "colors": "^1.4.0",
     "inquirer": "^7.1.0",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",
     "open": "^7.0.3",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -31,7 +32,7 @@
     "rimraf": "^3.0.1"
   },
   "bin": {
-    "au": "./dist/index.js"
+    "au": "dist/index.js"
   },
   "files": [
     "/dist"
