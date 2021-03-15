@@ -56,7 +56,13 @@ const getSubRepositories = async ({ repositoryNameKeyword, after }) => {
     }
     `
   const {
-    data: { search },
+    message,
+    data
   } = await fetchGraphql(query)
-  return search
+
+  if (message) {
+    throw Error(message)
+  }
+
+  return data.search
 }
